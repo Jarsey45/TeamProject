@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register at FishingSpot</title>
+    <link rel="stylesheet" href="{{ asset('assets/styles/auth.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
+</head>
+<body>
+    <div class="form-container">
+        <h1>Join us at<br><span class="brand-name">FishingSpot</span></h1>
+        <form action="{{ path('app_register') }}" method="post">
+            <label for="username">Username</label>
+            <input type="text" id="username" name="username" placeholder="Enter your username" required>
+
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" placeholder="Enter your password" required>
+
+            <label for="confirm_password">Confirm Password</label>
+            <input type="password" id="confirm_password" name="confirm_password" placeholder="Confirm your password" required>
+
+            <button type="submit">Register</button>
+        </form>
+        <div class="register">
+            <p>Already signed up? <a href="{{ path('app_login') }}">Login</a></p>
+        </div>
+    </div>
+</body>
+</html>
