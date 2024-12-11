@@ -9,10 +9,10 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 class SecurityController extends AbstractController {
     #[Route('/login', name: 'app_login')]
-    public function login(AuthenticationUtils $authenticationUtils): Response {
+    public function show(AuthenticationUtils $authenticationUtils): Response {
         // Sprawdzenie, czy użytkownik jest już zalogowany
         if ($this->getUser()) {
-            return $this->redirectToRoute('home');
+            return $this->redirectToRoute('dashboard');
         }
 
         // Pobranie błędu logowania, jeśli taki istnieje
