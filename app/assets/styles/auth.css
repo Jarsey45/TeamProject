@@ -84,3 +84,29 @@ button:hover {
 .register a:hover {
     text-decoration: underline;
 }
+
+.avatar {
+    width: 40px; /* Adjust size as needed */
+    height: 40px;
+    border-radius: 50%; /* Optional: keep circular cropping */
+    display: inline-block;
+}
+
+.user-item {
+    display: flex;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px solid #f1f1f1;
+}
+
+.user-item .avatar {
+    width: 40px;
+    height: 40px;
+    margin-right: 10px;
+}
+
+.user-info .avatar {
+    width: 50px;
+    height: 50px;
+    margin-right: 15px;
+}
