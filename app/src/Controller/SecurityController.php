@@ -12,18 +12,19 @@ class SecurityController extends AbstractController {
 	public function show(AuthenticationUtils $authenticationUtils) : Response {
 		// Sprawdzenie, czy użytkownik jest już zalogowany
 		if ($this->getUser()) {
-			return $this->redirectToRoute('dashboard');
+			return $this->redirectToRoute('app_home');
 		}
 
 		// Pobranie błędu logowania, jeśli taki istnieje
 		$error = $authenticationUtils->getLastAuthenticationError();
 
 		// Ostatnia wprowadzona nazwa użytkownika
-		$lastUsername = $authenticationUtils->getLastUsername();
+		$email = $authenticationUtils->getLastUsername();
 
 		return $this->render('security/login.html.twig', [
-			'last_username' => $lastUsername,
+			'email' => $email,
 			'error' => $error,
+			'title' => 'Login',
 		]);
 	}
 

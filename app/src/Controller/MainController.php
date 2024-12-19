@@ -7,8 +7,10 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 class MainController extends AbstractController {
-	#[Route('/', name: 'app_home')]
+	#[Route('/dashboard', name: 'app_home')]
 	public function index() : Response {
+
+
 	// Mocked data for demonstration
 	$onlineUsers = 256;
 	$users = [
