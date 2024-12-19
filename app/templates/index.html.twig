@@ -1,18 +1,18 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    {% include 'components/_left_panel.html.twig' with { online_users: online_users } %}
-    
-    <section class="feed">
-        {% for post in posts %}
-            {% include 'components/_post_card.html.twig' with { post: post } %}
-        {% endfor %}
-    <div class="loading-placeholder">
-        <span class="dot"></span>
-        <span class="dot"></span>
-        <span class="dot"></span>
-    </div>
-    </section>
+	{% include 'components/_left_panel.html.twig' with { online_users: online_users } %}
 
-    {% include 'components/_right_panel.html.twig' with { users: users } %}
+	<section class="feed">
+		{% for post in posts %}
+			{% include 'components/_post_card.html.twig' with { post: post } %}
+		{% endfor %}
+		<div class="loading-placeholder">
+			<span class="dot"></span>
+			<span class="dot"></span>
+			<span class="dot"></span>
+		</div>
+	</section>
+
+	{% include 'components/_right_panel.html.twig' with { users: users } %}
 {% endblock %}

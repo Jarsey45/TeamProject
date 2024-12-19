@@ -1,0 +1,19 @@
+{
+	"editor.insertSpaces": false,
+	"editor.detectIndentation": false,
+	"editor.tabSize": 2,
+	"editor.bracketPairColorization.enabled": true,
+	"editor.defaultFormatter": "esbenp.prettier-vscode",
+	"[php]": {
+		"editor.defaultFormatter": "DEVSENSE.phptools-vscode",
+		"editor.formatOnSave": true
+	},
+	"php.format.rules.brace_style": "k&r",
+	"php.format.codeStyle": "K&R",
+	"prettier.useTabs": true,
+	"prettier.tabWidth": 2,
+	"prettier.bracketSameLine": true,
+	"[twig]": {
+		"editor.defaultFormatter": "mblode.twig-language-2"
+	}
+}
