@@ -1,0 +1,32 @@
+@keyframes slideIn {
+	from {
+			transform: translateX(100%);
+	}
+	to {
+			transform: translateX(0);
+	}
+}
+
+.toast {
+	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.toast-success {
+	background: #4caf50;
+	color: white;
+}
+
+.toast-error {
+	background: #f44336;
+	color: white;
+}
+
+.toast-warning {
+	background: #ff9800;
+	color: white;
+}
+
+.toast-info {
+	background: #2196f3;
+	color: white;
+}

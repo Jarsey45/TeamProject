@@ -43,6 +43,7 @@ label {
 }
 
 input[type="text"],
+input[type="email"],
 input[type="password"] {
 	width: 100%;
 	padding: 12px;
@@ -53,7 +54,7 @@ input[type="password"] {
 	box-sizing: border-box;
 }
 
-button {
+form > button {
 	background-color: #34a853;
 	color: #ffffff;
 	padding: 15px;

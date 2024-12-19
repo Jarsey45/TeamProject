@@ -16,8 +16,8 @@ class LuckyController extends AbstractController {
 		$user = $entityManager->getRepository(User::class)->find(1);
 
 		return $this->render('lucky/number.html.twig', [
-				'number' => $number,
-				'userTest' => $user->getFirstName(),
+			'number' => $number,
+			'userTest' => $user->getFirstName(),
 		]);
 	}
 }

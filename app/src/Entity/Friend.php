@@ -6,75 +6,65 @@ use App\Repository\FriendRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: FriendRepository::class)]
-class Friend
-{
-    #[ORM\Id]
-    #[ORM\GeneratedValue]
-    #[ORM\Column]
-    private ?int $id = null;
+class Friend {
+	#[ORM\Id]
+	#[ORM\GeneratedValue]
+	#[ORM\Column]
+	private ?int $id = null;
 
-    #[ORM\Column]
-    private ?int $userId = null;
+	#[ORM\Column]
+	private ?int $userId = null;
 
-    #[ORM\Column]
-    private ?int $relatedUserId = null;
+	#[ORM\Column]
+	private ?int $relatedUserId = null;
 
-    #[ORM\Column]
-    private ?\DateTimeImmutable $createdAt = null;
+	#[ORM\Column]
+	private ?\DateTimeImmutable $createdAt = null;
 
-    #[ORM\Column]
-    private ?\DateTimeImmutable $updatedAt = null;
+	#[ORM\Column]
+	private ?\DateTimeImmutable $updatedAt = null;
 
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
+	public function getId() : ?int {
+		return $this->id;
+	}
 
-    public function getUserId(): ?int
-    {
-        return $this->userId;
-    }
+	public function getUserId() : ?int {
+		return $this->userId;
+	}
 
-    public function setUserId(int $userId): static
-    {
-        $this->userId = $userId;
+	public function setUserId(int $userId) : static {
+		$this->userId = $userId;
 
-        return $this;
-    }
+		return $this;
+	}
 
-    public function getRelatedUserId(): ?int
-    {
-        return $this->relatedUserId;
-    }
+	public function getRelatedUserId() : ?int {
+		return $this->relatedUserId;
+	}
 
-    public function setRelatedUserId(int $relatedUserId): static
-    {
-        $this->relatedUserId = $relatedUserId;
+	public function setRelatedUserId(int $relatedUserId) : static {
+		$this->relatedUserId = $relatedUserId;
 
-        return $this;
-    }
+		return $this;
+	}
 
-    public function getCreatedAt(): ?\DateTimeImmutable
-    {
-        return $this->createdAt;
-    }
+	public function getCreatedAt() : ?\DateTimeImmutable {
+		return $this->createdAt;
+	}
 
-    public function setCreatedAt(\DateTimeImmutable $createdAt): static
-    {
-        $this->createdAt = $createdAt;
+	public function setCreatedAt(\DateTimeImmutable $createdAt) : static {
+		$this->createdAt = $createdAt;
 
-        return $this;
-    }
+		return $this;
+	}
 
-    public function getUpdatedAt(): ?\DateTimeImmutable
-    {
-        return $this->updatedAt;
-    }
+	public function getUpdatedAt() : ?\DateTimeImmutable {
+		return $this->updatedAt;
+	}
 
-    public function setUpdatedAt(\DateTimeImmutable $updatedAt): static
-    {
-        $this->updatedAt = $updatedAt;
+	public function setUpdatedAt(\DateTimeImmutable $updatedAt) : static {
+		$this->updatedAt = $updatedAt;
 
-        return $this;
-    }
+		return $this;
+	}
 }
