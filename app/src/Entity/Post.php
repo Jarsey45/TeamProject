@@ -14,7 +14,7 @@ class Post {
 
 	#[ORM\Column(length: 255)]
 	private ?string $userId = null;
-
+	
 	#[ORM\Column(length: 255, nullable: true)]
 	private ?string $title = null;
 
@@ -35,6 +35,11 @@ class Post {
 
 	#[ORM\Column(length: 255, nullable: true)]
 	private ?string $slug = null;
+
+	#[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'posts')]
+  private User $author;
+
+	//TODO: Add relation to Comment
 
 	public function getId() : ?int {
 		return $this->id;

@@ -10,6 +10,8 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\PasswordUpgraderInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\Table(name: '`user`')]
@@ -58,9 +60,15 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, Passwor
 	#[ORM\Column(nullable: true)]
 	private ?\DateTimeImmutable $updated_at = null;
 
+	#[ORM\OneToMany(targetEntity: Post::class, mappedBy: 'author')]
+  private Collection $posts;
+
+	//TODO: Add relation to Comment
+
 	public function __construct() {
 		$this->uuid = uuid_create();
 		$this->created_at = new \DateTimeImmutable();
+		$this->posts = new ArrayCollection();
 	}
 
 	public function getId() : ?int {
@@ -159,6 +167,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, Passwor
 		$this->updated_at = $updated_at;
 
 		return $this;
+	}
+
+	public function getPosts() : Collection {
+		return $this->posts;
 	}
 
 	public function getUserIdentifier() : string {
