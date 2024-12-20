@@ -5,139 +5,180 @@ namespace App\Entity;
 use App\Repository\UserRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
+use Symfony\Component\Security\Core\User\PasswordUpgraderInterface;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\Table(name: '`user`')]
-class User
-{
-    
-    #[ORM\Id]
-    #[ORM\GeneratedValue]
-    #[ORM\Column]
-    private ?int $id = null;
+#[ORM\Index(columns: ['email'])]
+#[ORM\Index(columns: ['uuid'])]
+#[UniqueEntity(fields: ['email'], message: 'There is already an account with this email')]
+class User implements UserInterface, PasswordAuthenticatedUserInterface, PasswordUpgraderInterface {
 
-    #[ORM\Column(type: Types::GUID)]
-    private ?string $uuid = null;
+	#[ORM\Id]
+	#[ORM\GeneratedValue]
+	#[ORM\Column]
+	private ?int $id = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $first_name = null;
+	#[ORM\Column(type: Types::GUID)]
+	private ?string $uuid = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $last_name = null;
+	#[ORM\Column(length: 255)]
+	private ?string $first_name = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $email = null;
+	#[ORM\Column(length: 255, nullable: true)]
+	private ?string $last_name = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $password = null;
+	#[ORM\Column(length: 255)]
+	#[Assert\Email(
+		message: 'The email {{ value }} is not a valid email.',
+	)]
+	private ?string $email = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $phone_number = null;
+	#[ORM\Column(length: 255)]
+	#[Assert\NotCompromisedPassword]
+	#[Assert\Length(
+		min: 6,
+		minMessage: 'Your password should be at least {{ limit }} characters',
+	)]
+	private ?string $password = null;
 
-    #[ORM\Column]
-    private ?\DateTimeImmutable $created_at = null;
+	#[ORM\Column(length: 255, nullable: true)]
+	private ?string $phone_number = null;
 
-    #[ORM\Column(nullable: true)]
-    private ?\DateTimeImmutable $updated_at = null;
+	#[ORM\Column(type: Types::JSON)]
+	private array $roles = [];
 
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
+	#[ORM\Column]
+	private ?\DateTimeImmutable $created_at = null;
 
-    public function getUuid(): ?string
-    {
-        return $this->uuid;
-    }
+	#[ORM\Column(nullable: true)]
+	private ?\DateTimeImmutable $updated_at = null;
 
-    public function setUuid(string $uuid): static
-    {
-        $this->uuid = $uuid;
+	public function __construct() {
+		$this->uuid = uuid_create();
+		$this->created_at = new \DateTimeImmutable();
+	}
 
-        return $this;
-    }
+	public function getId() : ?int {
+		return $this->id;
+	}
 
-    public function getFirstName(): ?string
-    {
-        return $this->first_name;
-    }
+	public function getUuid() : ?string {
+		return $this->uuid;
+	}
 
-    public function setFirstName(string $first_name): static
-    {
-        $this->first_name = $first_name;
+	public function setUuid(string $uuid) : static {
+		$this->uuid = $uuid;
 
-        return $this;
-    }
+		return $this;
+	}
 
-    public function getLastName(): ?string
-    {
-        return $this->first_name;
-    }
+	public function getFirstName() : ?string {
+		return $this->first_name;
+	}
 
-    public function setLastName(string $first_name): static
-    {
-        $this->first_name = $first_name;
+	public function setFirstName(string $first_name) : static {
+		$this->first_name = $first_name;
 
-        return $this;
-    }
+		return $this;
+	}
 
-    public function getEmail(): ?string
-    {
-        return $this->email;
-    }
+	public function getLastName() : ?string {
+		return $this->first_name;
+	}
 
-    public function setEmail(string $email): static
-    {
-        $this->email = $email;
+	public function setLastName(string $last_name) : static {
+		$this->last_name = $last_name;
 
-        return $this;
-    }
+		return $this;
+	}
 
-    public function getPassword(): ?string
-    {
-        return $this->password;
-    }
+	public function getEmail() : ?string {
+		return $this->email;
+	}
 
-    public function setPassword(string $password): static
-    {
-        $this->password = $password;
+	public function setEmail(string $email) : static {
+		$this->email = $email;
 
-        return $this;
-    }
+		return $this;
+	}
 
-    public function getPhoneNumber(): ?string
-    {
-        return $this->phone_number;
-    }
+	public function getPassword() : ?string {
+		return $this->password;
+	}
 
-    public function setPhoneNumber(string $phone_number): static
-    {
-        $this->phone_number = $phone_number;
+	public function setPassword(string $password) : static {
+		$this->password = $password;
 
-        return $this;
-    }
+		return $this;
+	}
 
-    public function getCreatedAt(): ?\DateTimeImmutable
-    {
-        return $this->created_at;
-    }
+	public function getPhoneNumber() : ?string {
+		return $this->phone_number;
+	}
 
-    public function setCreatedAt(\DateTimeImmutable $created_at): static
-    {
-        $this->created_at = $created_at;
+	public function setPhoneNumber(string $phone_number) : static {
+		$this->phone_number = $phone_number;
 
-        return $this;
-    }
+		return $this;
+	}
 
-    public function getUpdatedAt(): ?\DateTimeImmutable
-    {
-        return $this->updated_at;
-    }
+	public function getRoles() : array {
+		$roles = $this->roles;
+		// guarantee every user at least has ROLE_USER
+		$roles[] = 'ROLE_USER';
 
-    public function setUpdatedAt(?\DateTimeImmutable $updated_at): static
-    {
-        $this->updated_at = $updated_at;
+		return array_unique($roles);
+	}
 
-        return $this;
-    }
+	public function setRoles(array $roles) : self {
+		$this->roles = $roles;
+
+		return $this;
+	}
+
+	public function getCreatedAt() : ?\DateTimeImmutable {
+		return $this->created_at;
+	}
+
+	public function setCreatedAt(\DateTimeImmutable $created_at) : static {
+		$this->created_at = $created_at;
+
+		return $this;
+	}
+
+	public function getUpdatedAt() : ?\DateTimeImmutable {
+		return $this->updated_at;
+	}
+
+	public function setUpdatedAt(?\DateTimeImmutable $updated_at) : static {
+		$this->updated_at = $updated_at;
+
+		return $this;
+	}
+
+	public function getUserIdentifier() : string {
+		return (string) $this->email;
+	}
+
+	public function eraseCredentials() : void {
+
+	}
+
+	/**
+	 * Used to upgrade (rehash) the user's password automatically over time.
+	 */
+	public function upgradePassword(PasswordAuthenticatedUserInterface $user, string $newHashedPassword) : void {
+		if (!$user instanceof self) {
+			throw new \InvalidArgumentException('Invalid user type.');
+		}
+
+		$user->setPassword($newHashedPassword);
+		// Don't forget to update the updated_at timestamp if you want to track password changes
+		$user->setUpdatedAt(new \DateTimeImmutable());
+	}
 }

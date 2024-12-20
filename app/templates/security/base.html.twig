@@ -3,28 +3,17 @@
 	<head>
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<title>
-			{% block title %}FishingSpot
-			{% endblock %}
-		</title>
-		<link rel="stylesheet" href="{{ asset('/styles/styles.css') }}">
+		<title>FishingSpot -
+			{{ title }}</title>
+		<link rel="stylesheet" href="{{ asset('/styles/auth.css') }}">
 		<link rel="stylesheet" href="{{ asset('/styles/partials/_flash_message.css') }}">
 		<link rel="preconnect" href="https://fonts.googleapis.com">
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 		<link href="https://fonts.googleapis.com/css2?family=Imprima&display=swap" rel="stylesheet">
-		<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
-		{% block javascripts %}
-			{% block importmap %}
-				{{ importmap('app') }}
-			{% endblock %}
-		{% endblock %}
+
 	</head>
 	<body>
-		{% include 'components/_header.html.twig' %}
-		<main>
-			{% block body %}{% endblock %}
-		</main>
-		{% include 'components/_footer.html.twig' %}
+		{% block body %}{% endblock %}
 
 		{% block javascripts_flash %}
 			{% block importmap_flash %}

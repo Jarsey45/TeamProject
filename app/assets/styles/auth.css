@@ -1,112 +1,113 @@
 body {
-    font-family: "Imprima", sans-serif;
-    background-color: #f8f9fa;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    margin: 0;
+	font-family: "Imprima", sans-serif;
+	background-color: #f8f9fa;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 100vh;
+	margin: 0;
 }
 
 .form-container {
-    background-color: #ffffff;
-    padding: 40px;
-    border-radius: 15px;
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
-    width: 400px;
-    text-align: center;
+	background-color: #ffffff;
+	padding: 40px;
+	border-radius: 15px;
+	box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+	width: 400px;
+	text-align: center;
 }
 
 h1 {
-    font-size: 32px;
-    margin-bottom: 5px;
-    color: #333;
-    font-weight: 600;
+	font-size: 32px;
+	margin-bottom: 5px;
+	color: #333;
+	font-weight: 600;
 }
 
 .brand-name {
-    color: #34a853;
-    font-weight: bold;
-    display: block;
-    margin-top: 0;
+	color: #34a853;
+	font-weight: bold;
+	display: block;
+	margin-top: 0;
 }
 
 form {
-    margin-top: 20px;
+	margin-top: 20px;
 }
 
 label {
-    display: block;
-    font-size: 16px;
-    margin-bottom: 5px;
-    text-align: left;
+	display: block;
+	font-size: 16px;
+	margin-bottom: 5px;
+	text-align: left;
 }
 
 input[type="text"],
+input[type="email"],
 input[type="password"] {
-    width: 100%;
-    padding: 12px;
-    margin-bottom: 15px;
-    border: 1px solid #ccc;
-    border-radius: 6px;
-    font-size: 16px;
-    box-sizing: border-box;
+	width: 100%;
+	padding: 12px;
+	margin-bottom: 15px;
+	border: 1px solid #ccc;
+	border-radius: 6px;
+	font-size: 16px;
+	box-sizing: border-box;
 }
 
-button {
-    background-color: #34a853;
-    color: #ffffff;
-    padding: 15px;
-    border: none;
-    border-radius: 8px;
-    font-size: 18px;
-    cursor: pointer;
-    width: 100%;
-    transition: background-color 0.3s;
+form > button {
+	background-color: #34a853;
+	color: #ffffff;
+	padding: 15px;
+	border: none;
+	border-radius: 8px;
+	font-size: 18px;
+	cursor: pointer;
+	width: 100%;
+	transition: background-color 0.3s;
 }
 
 button:hover {
-    background-color: #2a8f42;
+	background-color: #2a8f42;
 }
 
 .register {
-    font-size: 14px;
-    margin-top: 20px;
-    text-align: center;
+	font-size: 14px;
+	margin-top: 20px;
+	text-align: center;
 }
 
 .register a {
-    color: #34a853;
-    text-decoration: none;
-    font-weight: 500;
+	color: #34a853;
+	text-decoration: none;
+	font-weight: 500;
 }
 
 .register a:hover {
-    text-decoration: underline;
+	text-decoration: underline;
 }
 
 .avatar {
-    width: 40px; /* Adjust size as needed */
-    height: 40px;
-    border-radius: 50%; /* Optional: keep circular cropping */
-    display: inline-block;
+	width: 40px; /* Adjust size as needed */
+	height: 40px;
+	border-radius: 50%; /* Optional: keep circular cropping */
+	display: inline-block;
 }
 
 .user-item {
-    display: flex;
-    align-items: center;
-    padding: 10px 0;
-    border-bottom: 1px solid #f1f1f1;
+	display: flex;
+	align-items: center;
+	padding: 10px 0;
+	border-bottom: 1px solid #f1f1f1;
 }
 
 .user-item .avatar {
-    width: 40px;
-    height: 40px;
-    margin-right: 10px;
+	width: 40px;
+	height: 40px;
+	margin-right: 10px;
 }
 
 .user-info .avatar {
-    width: 50px;
-    height: 50px;
-    margin-right: 15px;
+	width: 50px;
+	height: 50px;
+	margin-right: 15px;
 }
