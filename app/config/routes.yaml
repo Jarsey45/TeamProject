@@ -3,3 +3,16 @@ controllers:
         path: ../src/Controller/
         namespace: App\Controller
     type: attribute
+
+profile:
+    path: /profile
+    controller: App\Controller\UserController::profile
+
+settings:
+    path: /settings
+    controller: App\Controller\UserController::settings
+
+
+logout:
+    path: /logout
+    controller: App\Controller\SecurityController::logout
