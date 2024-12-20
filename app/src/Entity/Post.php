@@ -13,7 +13,7 @@ class Post {
 	private ?int $id = null;
 
 	#[ORM\Column(length: 255)]
-	private ?string $author = null;
+	private ?string $userId = null;
 
 	#[ORM\Column(length: 255, nullable: true)]
 	private ?string $title = null;
