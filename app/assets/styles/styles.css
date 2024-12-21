@@ -295,3 +295,47 @@ main {
 		opacity: 1;
 	}
 }
+
+/* Dropdown menu in header */
+.account-dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.profile-button {
+    background: none;
+    border: none;
+    color: #333;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.dropdown-menu {
+    display: none;
+    position: absolute;
+    right: 0;
+    background-color: #ffffff;
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    z-index: 1;
+    text-align: left;
+    width: 150px;
+}
+
+.dropdown-menu a {
+    display: block;
+    padding: 10px 15px;
+    color: #333;
+    text-decoration: none;
+    font-size: 14px;
+    transition: background-color 0.2s;
+}
+
+.dropdown-menu a:hover {
+    background-color: #f1f1f1;
+    color: #34a853;
+}
+
+.account-dropdown:hover .dropdown-menu {
+    display: block;
+}
