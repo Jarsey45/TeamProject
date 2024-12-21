@@ -1,7 +1,7 @@
 <script>
 	document.addEventListener('DOMContentLoaded', () => {
 		const messages = {{ app.flashes|json_encode()|raw }};
-		console.log('Flash messages:', messages);
+		// console.log('Flash messages:', messages);
 
 		if (window.toastManager) {
 			for (const type in messages) {

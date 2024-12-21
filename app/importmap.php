@@ -20,6 +20,10 @@ return [
 		'path' => './assets/js/_flash_messsage.js',
 		'entrypoint' => true,
 	],
+	'post' => [
+		'path' => './assets/js/_post.js',
+		'entrypoint' => true,
+	],
 	'@hotwired/stimulus' => [
 		'version' => '3.2.2',
 	],

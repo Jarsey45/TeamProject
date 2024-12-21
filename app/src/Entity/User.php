@@ -3,8 +3,10 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\PersistentCollection;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
@@ -58,9 +60,15 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, Passwor
 	#[ORM\Column(nullable: true)]
 	private ?\DateTimeImmutable $updated_at = null;
 
+	#[ORM\OneToMany(targetEntity: Post::class, mappedBy: 'author')]
+	private PersistentCollection $posts;
+
+	//TODO: Add relation to Comment
+
 	public function __construct() {
 		$this->uuid = uuid_create();
 		$this->created_at = new \DateTimeImmutable();
+		$this->posts = new ArrayCollection();
 	}
 
 	public function getId() : ?int {
@@ -88,7 +96,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, Passwor
 	}
 
 	public function getLastName() : ?string {
-		return $this->first_name;
+		return $this->last_name;
 	}
 
 	public function setLastName(string $last_name) : static {
@@ -161,6 +169,29 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, Passwor
 		return $this;
 	}
 
+	public function getPosts() : PersistentCollection {
+		return $this->posts;
+	}
+
+	public function addPost(Post $post) {
+		if (!$this->posts->contains($post)) {
+			$this->posts->add($post);
+			$post->setAuthor($this);
+		}
+
+		return $this;
+	}
+
+	public function removePost(Post $post) : static {
+		if ($this->posts->removeElement($post)) {
+			// Set the author to null if it was this user
+			if ($post->getAuthor() === $this) {
+				$post->setAuthor(null);
+			}
+		}
+
+		return $this;
+	}
 	public function getUserIdentifier() : string {
 		return (string) $this->email;
 	}

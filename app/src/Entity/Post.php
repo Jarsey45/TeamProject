@@ -12,9 +12,6 @@ class Post {
 	#[ORM\Column]
 	private ?int $id = null;
 
-	#[ORM\Column(length: 255)]
-	private ?string $author = null;
-
 	#[ORM\Column(length: 255, nullable: true)]
 	private ?string $title = null;
 
@@ -36,15 +33,26 @@ class Post {
 	#[ORM\Column(length: 255, nullable: true)]
 	private ?string $slug = null;
 
+	#[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'posts')]
+	#[ORM\JoinColumn(nullable: false)]
+  private ?User $author = null;
+
+	//TODO: Add relation to Comment
+
+	public function __construct() {
+		$this->createdAt = new \DateTimeImmutable();
+		$this->updatedAt = new \DateTimeImmutable();
+	}
+
 	public function getId() : ?int {
 		return $this->id;
 	}
 
-	public function getAuthor() : ?string {
+	public function getAuthor() : ?User {
 		return $this->author;
 	}
 
-	public function setAuthor(string $author) : static {
+	public function setAuthor(?User $author) : static {
 		$this->author = $author;
 
 		return $this;
