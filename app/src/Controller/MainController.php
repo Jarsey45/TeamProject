@@ -2,33 +2,39 @@
 
 namespace App\Controller;
 
+use Symfony\Bridge\Twig\Attribute\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use App\Entity\Post;
+use App\Entity\User;
+use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\Tools\Pagination\Paginator;
 
 class MainController extends AbstractController {
+
 	#[Route('/dashboard', name: 'app_home')]
-	public function index() : Response {
+	#[Template('index.html.twig')]
+	public function index(EntityManagerInterface $entityManager) : Response {
+
+		$this->denyAccessUnlessGranted('ROLE_USER');
+
+		$posts = $entityManager->getRepository(Post::class)->getPostsWithOffset(1, 5);
+		$users = $entityManager->getRepository(User::class)->findAll();
 
 
-	// Mocked data for demonstration
-	$onlineUsers = 256;
-	$users = [
-		['name' => 'Super fisher'],
-		['name' => 'Pro fisher'],
-		['name' => 'Newbie fisher'],
-	];
+		// Mocked data for demonstration
+		$onlineUsers = 256;
 
-	$posts = [
-		['author' => 'Super fisher', 'content' => 'Caught a record-breaking marlin today! 🎣 230 lbs of pure challenge. #FishingLife #RecordCatch'],
-		['author' => 'Pro fisher', 'content' => 'Just tried a new bait for bass, worked like magic! 🐟 Cant wait to share the details in my next vlog.'],
-		['author' => 'Newbie fisher', 'content' => 'First time fishing today! Didnt catch anything :('],
-	];
-
-	return $this->render('index.html.twig', [
-		'online_users' => $onlineUsers,
-		'users' => $users,
-		'posts' => $posts,
-	]);
+		/**
+		 * @var User[] $users
+		 * @var Post[] $posts
+		 * @var int $onlineUsers
+		 */
+		return $this->render('index.html.twig', [
+			'online_users' => $onlineUsers,
+			'users' => $users,
+			'posts' => $posts,
+		]);
 	}
 }

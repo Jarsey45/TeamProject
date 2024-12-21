@@ -1,9 +1,17 @@
 {% extends 'base.html.twig' %}
 
+{% block javascripts %}
+    {% block importmap_post %}
+				{{ importmap('post') }}
+			{% endblock %}
+{% endblock %}
+
 {% block body %}
 	{% include 'components/_left_panel.html.twig' with { online_users: online_users } %}
 
 	<section class="feed">
+
+		{# @var posts Post[] #}
 		{% for post in posts %}
 			{% include 'components/_post_card.html.twig' with { post: post } %}
 		{% endfor %}
@@ -14,5 +22,6 @@
 		</div>
 	</section>
 
+	{# @var users \App\Entity\User[] #}
 	{% include 'components/_right_panel.html.twig' with { users: users } %}
 {% endblock %}

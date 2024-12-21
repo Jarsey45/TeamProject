@@ -4,20 +4,23 @@ namespace App\Controller;
 
 use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\PersistentCollection;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class LuckyController extends AbstractController {
 
-	#[Route('/lucky/number')]
+	#[Route('/test')]
 	public function number(EntityManagerInterface $entityManager) : Response {
-		$number = random_int(0, 100);
-		$user = $entityManager->getRepository(User::class)->find(1);
+
+		$user = $entityManager->getRepository(User::class)->find(7);
+		$posts = $user->getPosts();
+		$posts->initialize();
 
 		return $this->render('lucky/number.html.twig', [
-			'number' => $number,
-			'userTest' => $user->getFirstName(),
+			'user' => $user,
+			'posts' => $posts,
 		]);
 	}
 }

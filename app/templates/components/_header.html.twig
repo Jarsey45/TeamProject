@@ -1,9 +1,9 @@
 <div class="header">
     <div class="logo">FishingSpot</div>
-    <div class="post-container">
-        <input type="text" class="post-input" placeholder="How's the fishing going?">
+    <form class="post-container" action="{{ path('api_post_add') }}" method="post">
+        <input type="text" class="post-input" placeholder="How's the fishing going?" name="content">
         <button class="post-button">Plum...</button>
-    </div>
+    </form>
     <div class="account-dropdown">
         <button class="profile-button">Account</button>
         <div class="dropdown-menu">
