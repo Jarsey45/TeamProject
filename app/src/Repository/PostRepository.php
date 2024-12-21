@@ -14,28 +14,25 @@ class PostRepository extends ServiceEntityRepository {
 		parent::__construct($registry, Post::class);
 	}
 
-	//    /**
-	//     * @return Post[] Returns an array of Post objects
-	//     */
-	//    public function findByExampleField($value): array
-	//    {
-	//        return $this->createQueryBuilder('p')
-	//            ->andWhere('p.exampleField = :val')
-	//            ->setParameter('val', $value)
-	//            ->orderBy('p.id', 'ASC')
-	//            ->setMaxResults(10)
-	//            ->getQuery()
-	//            ->getResult()
-	//        ;
-	//    }
+	public function getPostsWithOffset(int $offset = 1, int $limit = 5) : array {
+		$offset = ($offset - 1) * $limit;
 
-	//    public function findOneBySomeField($value): ?Post
-	//    {
-	//        return $this->createQueryBuilder('p')
-	//            ->andWhere('p.exampleField = :val')
-	//            ->setParameter('val', $value)
-	//            ->getQuery()
-	//            ->getOneOrNullResult()
-	//        ;
-	//    }
+		$query = $this->createQueryBuilder('p')
+			->orderBy('p.createdAt', 'DESC')
+			->setFirstResult($offset)
+			->setMaxResults($limit)
+			->getQuery();
+
+		return $query->getResult();
+	}
+
+	public function getPostsForInifniteScroll(int $offset = 1, int $limit = 10) : array {
+		$query = $this->createQueryBuilder('p')
+			->orderBy('p.createdAt', 'DESC')
+			->setFirstResult($offset)
+			->setMaxResults($limit)
+			->getQuery();
+
+		return $query->getResult();
+	}
 }

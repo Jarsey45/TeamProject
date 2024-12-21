@@ -1,9 +1,10 @@
 <aside class="right-panel">
 	<ul class="user-list">
+		{# @var users User[] #}
 		{% for user in users %}
 			<li class="user-item">
 				<img src="{{ asset('/icons/user-avatar.svg') }}" alt="User Avatar" class="avatar">
-				<span>{{ user.name }}</span>
+				<span>{{ user.getFirstName() }} {{user.getLastName()}}</span>
 			</li>
 		{% endfor %}
 	</ul>
