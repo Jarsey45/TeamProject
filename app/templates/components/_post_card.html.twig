@@ -1,25 +1,29 @@
 {# @var post Post #}
 <div class="post-card">
-    <div class="user-info">
-        <img src="{{ asset('icons/user-avatar.svg') }}" alt="User Avatar" class="avatar">
-        <div class="user-details">
-            <h3>
-							{% if post.getAuthor() %}
-								{{ post.getAuthor().getFirstName() }} {{ post.getAuthor().getLastName() }}
-							{% endif %}
-						</h3>
-            <p>{{ post.getContent() }}</p>
-        </div>
-    </div>
-    <div class="actions">
-        <button class="action-button">
-            <img src="{{ asset('icons/heart.svg') }}" alt="Like">
-        </button>
-        <button class="action-button">
-            <img src="{{ asset('icons/comment.svg') }}" alt="Comment">
-        </button>
-        <button class="action-button">
-            <img src="{{ asset('icons/retweet.svg') }}" alt="Retweet">
-        </button>
-    </div>
+	<div class="user-info">
+		<img src="{{ asset('icons/user-avatar.svg') }}" alt="User Avatar" class="avatar">
+		<div class="user-details">
+			<h3>
+				{% if post.getAuthor() %}
+					{{ post.getAuthor().getFirstName() }}
+					{{ post.getAuthor().getLastName() }}
+				{% endif %}
+			</h3>
+			<p>{{ post.getContent() }}</p>
+		</div>
+	</div>
+	<div class="actions">
+		<form action="{{ path('api_post_like', {'id': post.id}) }}" method="POST" class="inline">
+			<button type="submit" class="action-button {{ post.isLikedByUser(app.user) ? 'liked' : '' }}">
+				<span>{{ post.getLikesCount() }}</span>
+				<img src="{{ asset('icons/heart.svg') }}" alt="Like">
+			</button>
+		</form>
+		<a href="{{ path('post_get', {'id': post.getId()}) }}" class="action-button">
+			<img src="{{ asset('icons/comment.svg') }}" alt="Comment">
+		</a>
+		<a href="#" class="action-button">
+			<img src="{{ asset('icons/retweet.svg') }}" alt="Retweet">
+		</a>
+	</div>
 </div>

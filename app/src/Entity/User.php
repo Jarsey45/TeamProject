@@ -64,6 +64,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, Passwor
 	#[ORM\OneToMany(targetEntity: Post::class, mappedBy: 'author')]
 	private Collection $posts;
 
+	#[ORM\OneToMany(targetEntity: Comment::class, mappedBy: 'author')]
+	private Collection $comments;
+
 	//TODO: Add relation to Comment
 
 	public function __construct() {
@@ -193,6 +196,31 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, Passwor
 
 		return $this;
 	}
+
+	public function getComments() : PersistentCollection {
+		return $this->posts;
+	}
+
+	public function addComment(Comment $comment) {
+		if (!$this->comments->contains($comment)) {
+			$this->comments->add($comment);
+			$comment->setAuthor($this);
+		}
+
+		return $this;
+	}
+
+	public function removeComment(Comment $comment) : static {
+		if ($this->comments->removeElement($comment)) {
+			// Set the author to null if it was this user
+			if ($comment->getAuthor() === $this) {
+				$comment->setAuthor(null);
+			}
+		}
+
+		return $this;
+	}
+
 	public function getUserIdentifier() : string {
 		return (string) $this->email;
 	}

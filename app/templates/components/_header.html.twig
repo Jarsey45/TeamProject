@@ -1,15 +1,17 @@
 <div class="header">
-    <div class="logo">FishingSpot</div>
-    <form class="post-container" action="{{ path('api_post_add') }}" method="post">
-        <input type="text" class="post-input" placeholder="How's the fishing going?" name="content">
-        <button class="post-button">Plum...</button>
-    </form>
-    <div class="account-dropdown">
-        <button class="profile-button">Account</button>
-        <div class="dropdown-menu">
-            <a href="{{ path('profile') }}">Profile</a>
-            <a href="{{ path('settings') }}">Settings</a>
-            <a href="{{ path('logout') }}">Logout</a>
-        </div>
+	<a class="unstyled_link" href="{{path('app_home')}}">
+		<div class="logo">FishingSpot</div>
+	</a>
+	<form class="post-container" action="{{ path('api_post_add') }}" method="post">
+		<input type="text" class="post-input" placeholder="How's the fishing going?" name="content">
+		<button class="post-button">Plum...</button>
+	</form>
+	<div class="account-dropdown">
+    <button class="profile-button">Account</button>
+    <div class="dropdown-menu">
+      <a href="{{ path('profile') }}">Profile</a>
+      <a href="{{ path('settings') }}">Settings</a>
+      <a href="{{ path('logout') }}">Logout</a>
     </div>
+  </div>
 </div>
