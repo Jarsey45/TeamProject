@@ -13,22 +13,30 @@ class Comment {
 	private ?int $id = null;
 
 	#[ORM\Column(length: 255)]
-	private ?string $userId = null;
-
-	#[ORM\Column(length: 255)]
 	private ?string $content = null;
 
-	#[ORM\Column]
-	private ?int $post_id = null;
+	#[ORM\ManyToOne(targetEntity: Post::class, inversedBy: 'comments')]
+	#[ORM\JoinColumn(nullable: false)]
+	private ?Post $post = null;
 
-	#[ORM\Column(nullable: true)]
-	private ?int $parent_id = null;
+	#[ORM\ManyToOne(targetEntity: Comment::class)]
+	#[ORM\JoinColumn(nullable: true)]
+	private ?Comment $parentComment = null;
+
+	#[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'comments')]
+	#[ORM\JoinColumn(nullable: false)]
+	private ?User $author = null;
 
 	#[ORM\Column]
 	private ?\DateTimeImmutable $createdAt = null;
 
 	#[ORM\Column]
 	private ?\DateTimeImmutable $updatedAt = null;
+
+	public function __construct() {
+		$this->createdAt = new \DateTimeImmutable();
+		$this->updatedAt = new \DateTimeImmutable();
+	}
 
 	public function getId() : ?int {
 		return $this->id;
@@ -50,31 +58,31 @@ class Comment {
 		return $this;
 	}
 
-	public function getAuthor() : ?string {
+	public function getAuthor() : ?User {
 		return $this->author;
 	}
 
-	public function setAuthor(string $author) : static {
+	public function setAuthor(User $author) : static {
 		$this->author = $author;
 
 		return $this;
 	}
 
-	public function getPostId() : ?int {
-		return $this->post_id;
+	public function getPost() : ?Post {
+		return $this->post;
 	}
 
-	public function setPostId(int $post_id) : static {
-		$this->post_id = $post_id;
+	public function setPost(Post $post) : static {
+		$this->post = $post;
 
 		return $this;
 	}
 
-	public function getParentComment() : ?int {
+	public function getParentComment() : ?Comment {
 		return $this->parentComment;
 	}
 
-	public function setParentComment(?int $parentComment) : static {
+	public function setParentComment(?Comment $parentComment) : static {
 		$this->parentComment = $parentComment;
 
 		return $this;
@@ -91,11 +99,11 @@ class Comment {
 	}
 
 	public function getUpdatedAt() : ?\DateTimeImmutable {
-		return $this->createdAt;
+		return $this->updatedAt;
 	}
 
-	public function setUpdatedAt(\DateTimeImmutable $createdAt) : static {
-		$this->createdAt = $createdAt;
+	public function setUpdatedAt(\DateTimeImmutable $updatedAt) : static {
+		$this->updatedAt = $updatedAt;
 
 		return $this;
 	}

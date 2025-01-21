@@ -16,11 +16,11 @@ class FeedController extends AbstractController {
 		$page = $request->query->getInt('offset', 1);
 		$limit = $request->query->getInt('limit', 10);
 
-		$posts = $postRepository->getPostsForInifniteScroll($page, $limit);
+		$posts = $postRepository->getPostsForInfiniteScroll($page, $limit);
 
 		$json = [];
 
-		foreach($posts as $post) {
+		foreach ($posts as $post) {
 			$json[] = $this->render('components/_post_card.html.twig', [
 				'post' => $post
 			]);

@@ -10,6 +10,12 @@ body {
 	color: #333;
 }
 
+.unstyled_link {
+	text-decoration: none;
+	color: inherit;
+}
+
+
 /* Header Styling */
 .header {
 	display: flex;
@@ -232,6 +238,14 @@ main {
 	border: none;
 	cursor: pointer;
 	transition: transform 0.2s ease-in-out;
+}
+
+.action-button.liked {
+	color: #e0245e;
+}
+
+.action-button.liked img {
+	filter: invert(37%) sepia(97%) saturate(7404%) hue-rotate(335deg) brightness(91%) contrast(98%);
 }
 
 .action-button::before {

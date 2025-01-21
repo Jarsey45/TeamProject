@@ -2,6 +2,8 @@
 
 namespace App\Controller;
 
+use App\Controller\Trait\CommonDataTrait;
+use Symfony\Bridge\Twig\Attribute\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
@@ -11,6 +13,8 @@ use Doctrine\ORM\EntityManagerInterface;
 use App\Entity\Post;
 
 class PostController extends AbstractController {
+
+	use CommonDataTrait;
 
 	#[Route('/api/post', name: 'api_post_add', methods: ['POST'])]
 	public function addPost(Request $request, EntityManagerInterface $entityManager) : Response {
@@ -43,5 +47,35 @@ class PostController extends AbstractController {
 			return $this->redirectToRoute('app_home');
 		}
 
+	}
+
+	#[Route('/post/{id}', name: 'post_get', methods: ['GET'])]
+	#[Template('post/index.html.twig')]
+	public function getPost(int $id, EntityManagerInterface $entityManager) : Response {
+		try {
+			$post = $entityManager->getRepository(Post::class)->find($id);
+
+			if (!$post) {
+				return $this->json([
+					'error' => 'Post not found'
+				], Response::HTTP_NOT_FOUND);
+			}
+
+			//this should definetly be more sophisticated approach
+			//for now we will just return the post and its comments with trait
+			$commonData = $this->getCommonData($entityManager);
+
+			return $this->render(
+				'post/index.html.twig',
+				array_merge($commonData, [
+					'post' => $post,
+					'comments' => $post->getComments(),
+				])
+			);
+
+		} catch (\Exception $e) {
+			$this->addFlash('error', 'An error occurred while creating the post. ' . $e->getMessage());
+			return $this->redirectToRoute('app_home');
+		}
 	}
 }

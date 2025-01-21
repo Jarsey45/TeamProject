@@ -26,7 +26,7 @@ class PostRepository extends ServiceEntityRepository {
 		return $query->getResult();
 	}
 
-	public function getPostsForInifniteScroll(int $offset = 1, int $limit = 10) : array {
+	public function getPostsForInfiniteScroll(int $offset = 1, int $limit = 10) : array {
 		$query = $this->createQueryBuilder('p')
 			->orderBy('p.createdAt', 'DESC')
 			->setFirstResult($offset)
