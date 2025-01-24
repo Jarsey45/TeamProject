@@ -353,3 +353,183 @@ main {
 .account-dropdown:hover .dropdown-menu {
     display: block;
 }
+
+
+/* Styling for the comment card */
+.comment-card {
+	background-color: #ffffff;
+	border-radius: 8px;
+	padding: 15px;
+	margin-bottom: 10px;
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+	display: flex;
+	flex-direction: column;
+}
+
+.comment-card .user-info {
+	display: flex;
+	align-items: center;
+	margin-bottom: 10px;
+}
+
+.comment-card .avatar {
+	width: 40px;
+	height: 40px;
+	border-radius: 50%;
+	margin-right: 10px;
+	background-color: #ffcccc;
+}
+
+.comment-card .user-details h3 {
+	margin: 0;
+	font-size: 16px;
+	color: #333;
+	font-weight: bold;
+}
+
+.comment-card .user-details p {
+	margin: 0;
+	font-size: 14px;
+	color: #555;
+}
+
+.comment-card .actions {
+	display: flex;
+	gap: 10px;
+	margin-top: 5px;
+}
+
+.comment-card .action-button {
+	background: none;
+	border: none;
+	cursor: pointer;
+	display: flex;
+	align-items: center;
+	transition: transform 0.2s ease;
+}
+
+.comment-card .action-button img {
+	width: 18px;
+	height: 18px;
+}
+
+.comment-card .action-button:hover {
+	transform: scale(1.1);
+}
+
+/* Comment input styling */
+.comment-container {
+	display: flex;
+	margin-top: 15px;
+	gap: 10px;
+	align-items: center;
+}
+
+.comment-input {
+	flex: 1;
+	border: 1px solid #ccc;
+	border-radius: 6px;
+	padding: 10px;
+	font-size: 14px;
+	color: #333;
+	outline: none;
+	font-family: "Imprima", sans-serif;
+}
+
+.comment-input::placeholder {
+	color: #aaa;
+}
+
+.comment-button {
+	background-color: #34a853;
+	color: white;
+	border: none;
+	padding: 10px 20px;
+	font-size: 14px;
+	font-weight: bold;
+	border-radius: 6px;
+	cursor: pointer;
+	transition: background-color 0.3s ease;
+	font-family: "Imprima", sans-serif;
+}
+
+.comment-button:hover {
+	background-color: #2a8f42;
+}
+
+
+/* Actions (reactions) under posts */
+.actions {
+	display: flex;
+	justify-content: flex-start;
+	gap: 15px; /* Gap between reaction icons */
+}
+
+.action-button {
+	position: relative;
+	width: 40px;
+	height: 40px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	background-color: transparent;
+	border: none;
+	cursor: pointer;
+	transition: transform 0.2s ease-in-out;
+}
+
+.action-button img {
+	width: 20px;
+	height: 20px;
+	z-index: 1;
+}
+
+.action-button:hover {
+	transform: scale(1.1);
+}
+
+.action-button.liked img {
+	filter: invert(50%) sepia(77%) saturate(745%) hue-rotate(330deg) brightness(92%) contrast(90%);
+}
+
+
+/* Większy odstęp między komentarzem a postem */
+.comments {
+	margin-top: 20px; /* Odstęp pomiędzy postem a komentarzami */
+}
+
+/* Ostatni komentarz bez marginesu */
+.comment-card:last-child {
+	margin-bottom: 0;
+}
+
+/* Licznik lajków - mniejsza odległość od serduszka */
+.action-button span {
+	  font-family: "Imprima", sans-serif;
+    font-size: 14px;
+    font-weight: bold;
+    color: #444;
+    margin-right: 4px; /* Zmniejszenie odstępu */
+}
+
+/* Serduszko - kolor zielony po kliknięciu */
+.action-button.liked img {
+    filter: invert(45%) sepia(71%) saturate(394%) hue-rotate(85deg) brightness(90%) contrast(90%);
+}
+
+/* Animacja dla kliknięcia serduszka */
+.action-button.liked {
+    animation: pulse 0.4s ease-in-out;
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.2); /* Powiększenie */
+    }
+    100% {
+        transform: scale(1); /* Powrót do normalnego rozmiaru */
+    }
+}

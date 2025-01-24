@@ -1,23 +1,22 @@
-{# @var comment comment #}
 <div class="comment-card">
-	<div class="user-info">
-		<img src="{{ asset('icons/user-avatar.svg') }}" alt="User Avatar" class="avatar">
-		<div class="user-details">
-			<h3>
-				{% if comment.getAuthor() %}
-					{{ comment.getAuthor().getFirstName() }}
-					{{ comment.getAuthor().getLastName() }}
-				{% endif %}
-			</h3>
-			<p>{{ comment.getContent() }}</p>
-		</div>
-	</div>
-	<div class="actions">
-		<button class="action-button">
-			<img src="{{ asset('icons/heart.svg') }}" alt="Like">
-		</button>
-		<button class="action-button">
-			<img src="{{ asset('icons/comment.svg') }}" alt="Comment">
-		</button>
-	</div>
+    <div class="user-info">
+        <img src="{{ asset('icons/user-avatar.svg') }}" alt="User Avatar" class="avatar">
+        <div class="user-details">
+            <h3>
+                {% if comment.getAuthor() %}
+                    {{ comment.getAuthor().getFirstName() }}
+                    {{ comment.getAuthor().getLastName() }}
+                {% endif %}
+            </h3>
+            <p>{{ comment.getContent() }}</p>
+        </div>
+    </div>
+    <div class="actions">
+        <button class="action-button">
+            <img src="{{ asset('icons/heart.svg') }}" alt="Like">
+        </button>
+        <button class="action-button">
+            <img src="{{ asset('icons/comment.svg') }}" alt="Reply">
+        </button>
+    </div>
 </div>

@@ -2,55 +2,68 @@
 
 namespace App\Controller;
 
-use App\Controller\Trait\CommonDataTrait;
+use App\Entity\Post;
+use App\Entity\Comment;
+use App\Repository\PostRepository;
+use App\Repository\UserRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
-use Doctrine\ORM\EntityManagerInterface;
-
-use App\Entity\Post;
-use App\Entity\Comment;
 
 class CommentController extends AbstractController {
-	use CommonDataTrait;
+    #[Route('/api/post/{id}/comment', name: 'api_comment_add', methods: ['POST'])]
+    public function addComment(
+        Request $request,
+        int $id,
+        EntityManagerInterface $entityManager,
+        PostRepository $postRepository,
+        UserRepository $userRepository
+    ): Response {
+        $this->denyAccessUnlessGranted('ROLE_USER');
 
-	#[Route('/api/post/{id}/comment', name: 'api_comment_add', methods: ['POST'])]
-	public function addComment(Request $request, int $id, EntityManagerInterface $entityManager) : Response {
-		// Check if user is logged in
-		$this->denyAccessUnlessGranted('ROLE_USER');
+        try {
+            $post = $postRepository->find($id);
 
-		try {
-			$post = $entityManager->getRepository(Post::class)->find($id);
+            if (!$post) {
+                throw new \Exception('Post not found');
+            }
 
-			if (!$post) {
-				throw new \Exception('Post not found');
-			}
+            $content = $request->request->get('content');
 
-			$content = $request->request->get('content');
+            if (empty($content)) {
+                throw new \Exception('Comment content cannot be empty');
+            }
 
-			if (empty($content)) {
-				throw new \Exception('Comment content cannot be empty');
-			}
+            $comment = new Comment();
+            $comment
+                ->setContent($content)
+                ->setPost($post)
+                ->setAuthor($this->getUser());
 
-			$comment = new Comment();
-			$comment
-				->setContent($content)
-				->setPost($post)
-				->setAuthor($this->getUser());
+            $entityManager->persist($comment);
+            $entityManager->flush();
 
-			$entityManager->persist($comment);
-			$entityManager->flush();
+            $this->addFlash('success', 'Comment has been added!');
+        } catch (\Exception $e) {
+            $this->addFlash('error', 'An error occurred while creating comment: ' . $e->getMessage());
+        }
 
-			$this->addFlash('success', 'Comment has been added!');
+        $posts = $postRepository->findAllSortedByUpdatedAt();
+        $users = $userRepository->findAll();
 
-		} catch (\Exception $e) {
-			$this->addFlash(
-				'error',
-				'An error occurred while creating comment: ' . $e->getMessage()
-			);
-		}
+        return $this->render('index.html.twig', [
+            'posts' => $posts,
+            'online_users' => $this->getOnlineUsers(),
+            'users' => $users,
+        ]);
+    }
 
-		return $this->redirectToRoute('post_get', ['id' => $id]);
-	}
+    private function getOnlineUsers(): array {
+        return [
+            ['name' => 'User 1', 'status' => 'online'],
+            ['name' => 'User 2', 'status' => 'online'],
+        ];
+    }
 }
