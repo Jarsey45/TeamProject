@@ -35,4 +35,11 @@ class PostRepository extends ServiceEntityRepository {
 
 		return $query->getResult();
 	}
+	public function findAllSortedByUpdatedAt(): array
+	{
+			return $this->createQueryBuilder('p')
+					->orderBy('p.updatedAt', 'DESC')
+					->getQuery()
+					->getResult();
+	}
 }

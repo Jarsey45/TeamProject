@@ -1,51 +1,59 @@
 <?php
-// src/Controller/LikeController.php
 
 namespace App\Controller;
 
-use App\Entity\Likes;
 use App\Entity\Post;
+use App\Entity\Likes;
+use App\Repository\PostRepository;
+use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 class LikeController extends AbstractController {
-	#[Route('/api/post/{id}/like', name: 'api_post_like', methods: ['POST'])]
-	public function toggleLike(Post $post, EntityManagerInterface $entityManager) : Response {
-		$this->denyAccessUnlessGranted('ROLE_USER');
-		$user = $this->getUser();
+    #[Route('/api/post/{id}/like', name: 'api_post_like', methods: ['POST'])]
+    public function toggleLike(
+        Post $post,
+        EntityManagerInterface $entityManager,
+        PostRepository $postRepository,
+        UserRepository $userRepository
+    ): Response {
+        $this->denyAccessUnlessGranted('ROLE_USER');
+        $user = $this->getUser();
 
-		$likeRepository = $entityManager->getRepository(Likes::class);
-		$existingLike = $likeRepository->findOneBy([
-			'post' => $post,
-			'user' => $user
-		]);
+        $likeRepository = $entityManager->getRepository(Likes::class);
+        $existingLike = $likeRepository->findOneBy([
+            'post' => $post,
+            'user' => $user,
+        ]);
 
-		if ($existingLike) {
-			// Unlike
-			$entityManager->remove($existingLike);
-			$message = 'Post unliked successfully';
-		} else {
-			// Like
-			$like = new Likes();
-			$like->setPost($post)
-				->setUser($user);
+        if ($existingLike) {
+            $entityManager->remove($existingLike);
+        } else {
+            $like = new Likes();
+            $like->setPost($post)
+                ->setUser($user);
 
-			$entityManager->persist($like);
-			$message = 'Post liked successfully';
-		}
+            $entityManager->persist($like);
+        }
 
-		$entityManager->flush();
+        $entityManager->flush();
 
-		// return $this->json(data: [
-		// 	'success' => true,
-		// 	'message' => $message,
-		// 	'likesCount' => $post->getLikesCount(),
-		// 	'isLiked' => $post->isLikedByUser($user)
-		// ]);
+        $posts = $postRepository->findAllSortedByUpdatedAt();
+        $users = $userRepository->findAll();
 
-		$this->addFlash('success', $message);
-		return $this->redirectToRoute('post_get', ['id' => $post->getId()]);
-	}
+        return $this->render('index.html.twig', [
+            'posts' => $posts,
+            'online_users' => $this->getOnlineUsers(),
+            'users' => $users,
+        ]);
+    }
+
+    private function getOnlineUsers(): array {
+        return [
+            ['name' => 'User 1', 'status' => 'online'],
+            ['name' => 'User 2', 'status' => 'online'],
+        ];
+    }
 }

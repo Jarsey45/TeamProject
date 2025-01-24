@@ -9,6 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\PersistentCollection;
 
 #[ORM\Entity(repositoryClass: PostRepository::class)]
+#[ORM\HasLifecycleCallbacks] // Dodano, aby automatycznie aktualizować `updatedAt`
 class Post {
 	#[ORM\Id]
 	#[ORM\GeneratedValue]
@@ -34,10 +35,10 @@ class Post {
 	#[ORM\JoinColumn(nullable: false)]
 	private ?User $author = null;
 
-	#[ORM\OneToMany(targetEntity: Comment::class, mappedBy: 'post')]
+	#[ORM\OneToMany(targetEntity: Comment::class, mappedBy: 'post', cascade: ['remove'])]
 	private Collection $comments;
 
-	#[ORM\OneToMany(targetEntity: Likes::class, mappedBy: 'post', orphanRemoval: true)]
+	#[ORM\OneToMany(targetEntity: Likes::class, mappedBy: 'post', orphanRemoval: true, cascade: ['remove'])]
 	private Collection $likes;
 
 	#[ORM\Column]
@@ -49,49 +50,55 @@ class Post {
 	public function __construct() {
 		$this->createdAt = new \DateTimeImmutable();
 		$this->updatedAt = new \DateTimeImmutable();
-		$this->posts = new ArrayCollection();
+		$this->comments = new ArrayCollection();
 		$this->likes = new ArrayCollection();
 	}
 
-	public function getId() : ?int {
+	#[ORM\PrePersist]
+	#[ORM\PreUpdate]
+	public function updateTimestamps(): void {
+		$this->updatedAt = new \DateTimeImmutable();
+	}
+
+	public function getId(): ?int {
 		return $this->id;
 	}
 
-	public function getAuthor() : ?User {
+	public function getAuthor(): ?User {
 		return $this->author;
 	}
 
-	public function setAuthor(?User $author) : static {
+	public function setAuthor(?User $author): static {
 		$this->author = $author;
 
 		return $this;
 	}
 
-	public function getTitle() : ?string {
+	public function getTitle(): ?string {
 		return $this->title;
 	}
 
-	public function setTitle(?string $title) : static {
+	public function setTitle(?string $title): static {
 		$this->title = $title;
 
 		return $this;
 	}
 
-	public function getContent() : ?string {
+	public function getContent(): ?string {
 		return $this->content;
 	}
 
-	public function setContent(string $content) : static {
+	public function setContent(string $content): static {
 		$this->content = $content;
 
 		return $this;
 	}
 
-	public function getComments() : PersistentCollection {
+	public function getComments(): Collection {
 		return $this->comments;
 	}
 
-	public function addComment(Comment $comment) {
+	public function addComment(Comment $comment): self {
 		if (!$this->comments->contains($comment)) {
 			$this->comments->add($comment);
 			$comment->setPost($this);
@@ -100,15 +107,15 @@ class Post {
 		return $this;
 	}
 
-	public function getLikes() : Collection {
+	public function getLikes(): Collection {
 		return $this->likes;
 	}
 
-	public function getLikesCount() : int {
+	public function getLikesCount(): int {
 		return $this->likes->count();
 	}
 
-	public function isLikedByUser(User $user) : bool {
+	public function isLikedByUser(User $user): bool {
 		foreach ($this->likes as $like) {
 			if ($like->getUser() === $user) {
 				return true;
@@ -117,7 +124,7 @@ class Post {
 		return false;
 	}
 
-	public function addLike(Likes $like) : self {
+	public function addLike(Likes $like): self {
 		if (!$this->likes->contains($like)) {
 			$this->likes->add($like);
 			$like->setPost($this);
@@ -125,7 +132,7 @@ class Post {
 		return $this;
 	}
 
-	public function removeLike(Likes $like) : self {
+	public function removeLike(Likes $like): self {
 		if ($this->likes->removeElement($like)) {
 			if ($like->getPost() === $this) {
 				$like->setPost(null);
@@ -134,51 +141,51 @@ class Post {
 		return $this;
 	}
 
-	public function getMedia() : ?string {
+	public function getMedia(): ?string {
 		return $this->media;
 	}
 
-	public function setMedia(?string $media) : static {
+	public function setMedia(?string $media): static {
 		$this->media = $media;
 
 		return $this;
 	}
 
-	public function getCreatedAt() : ?\DateTimeImmutable {
+	public function getCreatedAt(): ?\DateTimeImmutable {
 		return $this->createdAt;
 	}
 
-	public function setCreatedAt(\DateTimeImmutable $createdAt) : static {
+	public function setCreatedAt(\DateTimeImmutable $createdAt): static {
 		$this->createdAt = $createdAt;
 
 		return $this;
 	}
 
-	public function getUpdatedAt() : ?\DateTimeImmutable {
+	public function getUpdatedAt(): ?\DateTimeImmutable {
 		return $this->updatedAt;
 	}
 
-	public function setUpdatedAt(\DateTimeImmutable $updatedAt) : static {
+	public function setUpdatedAt(\DateTimeImmutable $updatedAt): static {
 		$this->updatedAt = $updatedAt;
 
 		return $this;
 	}
 
-	public function isPublished() : ?bool {
+	public function isPublished(): ?bool {
 		return $this->isPublished;
 	}
 
-	public function setPublished(?bool $isPublished) : static {
+	public function setPublished(?bool $isPublished): static {
 		$this->isPublished = $isPublished;
 
 		return $this;
 	}
 
-	public function getSlug() : ?string {
+	public function getSlug(): ?string {
 		return $this->slug;
 	}
 
-	public function setSlug(?string $slug) : static {
+	public function setSlug(?string $slug): static {
 		$this->slug = $slug;
 
 		return $this;
