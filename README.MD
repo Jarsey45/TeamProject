@@ -78,8 +78,6 @@ php bin/console doctrine:migrations:migrate
 
 ## ERD Diagram
 
-## ERD Diagram
-
 ```mermaid
 erDiagram
     User ||--o{ Post : creates
