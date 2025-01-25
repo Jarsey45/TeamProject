@@ -3,8 +3,8 @@
 ## Contents
 - [App description](#app-description)
 - [Let's start!](#lets-start)
-- [Database](#doctrine-database)
 - [Screenshots](#screenshots)
+- [ERD Diagram](#erd-diagram)
 
 
 
@@ -30,15 +30,30 @@ Move to the project's directory and run the command below:
 ```shell
 docker-compose up --build
 ```
-### 3. Doctrine database
 
-If you don't have database yet use:
+
+### 3. Symfony
+To install Symfony inside Docker, run:
+
 ```shell
-php bin/console doctrine:database:create
+docker exec -it php_project-php-1 composer require symfony/runtime
 ```
+
+### 4. Database
+
+You can create database using:
+```shell
+docker exec -it php_project-php-1 php bin/console doctrine:database:create
+```
+
 Migration:
 ```shell
-php bin/console doctrine:migrations:migrate
+docker exec -it php_project-php-1 php bin/console doctrine:migrations:migrate
+```
+
+You can delete database using:
+```shell
+docker exec -it php_project-php-1 php bin/console doctrine:database:drop --force
 ```
 
 
@@ -48,24 +63,16 @@ php bin/console doctrine:migrations:migrate
 
 ## Screenshots
 
+### Dashboard
+
+![Dashboard](https://i.imgur.com/W9mgyqR.png)
+
 ### Login Page
-| Desktop       | Mobile     |
-|:-------------:|:------------:|
-|![Login Page Desktop](https://i.imgur.com/s5xLPnL.png) | ![Login Page Mobile](https://i.imgur.com/example.png)
+![Login Page](https://i.imgur.com/gLyvfaM.png)
 
-### Register Page
-| Desktop       | Mobile     |
-|:-------------:|:------------:|
-|![Register Page Desktop](https://i.imgur.com/YFZaJcY.png) | ![Register Page Mobile](https://i.imgur.com/example.png)
+### Registration Page
+![Registration Page](https://i.imgur.com/Ahmy9M4.png) 
 
-<details>
-  <summary>Dashboard</summary>
-
-  | Desktop       | Mobile     |
-  |:-------------:|:------------:|
-  |![Login Desktop](https://i.imgur.com/example.png) | ![Login Mobile](https://i.imgur.com/example.png)
-
-</details>
 
 <details>
   <summary>Profile</summary>
