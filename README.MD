@@ -74,14 +74,9 @@ docker exec -it php_project-php-1 php bin/console doctrine:database:drop --force
 ![Registration Page](https://i.imgur.com/Ahmy9M4.png) 
 
 
-<details>
-  <summary>Profile</summary>
+### Profile
+![Profile](https://i.imgur.com/cexrrxz.png) 
 
-  | Desktop       | Mobile     |
-  |:-------------:|:------------:|
-  |![Register Desktop](https://i.imgur.com/example.png) | ![Register Mobile](https://i.imgur.com/example.png)
-
-</details>
 
 ## ERD Diagram
 
