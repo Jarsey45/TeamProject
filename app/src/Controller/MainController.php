@@ -10,7 +10,11 @@ use App\Entity\Post;
 use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
 
+use App\Controller\Trait\CommonDataTrait;
+
 class MainController extends AbstractController {
+
+	use CommonDataTrait;
 
 	#[Route('/dashboard', name: 'app_home')]
 	#[Template('index.html.twig')]
@@ -18,22 +22,23 @@ class MainController extends AbstractController {
 
 		$this->denyAccessUnlessGranted('ROLE_USER');
 
-		$posts = $entityManager->getRepository(Post::class)->getPostsWithOffset(1, 5);
-		$users = $entityManager->getRepository(User::class)->findAll();
-
+		$posts = $entityManager->getRepository(Post::class)->findAllSortedByUpdatedAt();
 
 		// Mocked data for demonstration
-		$onlineUsers = 256;
+		$commonData = $this->getCommonData($entityManager);
 
 		/**
 		 * @var User[] $users
 		 * @var Post[] $posts
 		 * @var int $onlineUsers
 		 */
-		return $this->render('index.html.twig', [
-			'online_users' => $onlineUsers,
-			'users' => $users,
-			'posts' => $posts,
-		]);
+		return $this->render('index.html.twig',
+			array_merge(
+				$commonData,
+				[
+					'posts' => $posts,
+				]
+			)
+		);
 	}
 }

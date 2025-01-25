@@ -16,8 +16,6 @@ class PostController extends AbstractController {
 	public function addPost(
 		Request $request,
 		EntityManagerInterface $entityManager,
-		PostRepository $postRepository,
-		UserRepository $userRepository
 	) : Response {
 		$this->denyAccessUnlessGranted('ROLE_USER');
 
@@ -39,15 +37,7 @@ class PostController extends AbstractController {
 			$this->addFlash('error', 'An error occurred: ' . $e->getMessage());
 		}
 
-		// Pobierz listę postów i użytkowników online
-		$posts = $postRepository->findAllSortedByUpdatedAt();
-		$users = $userRepository->findAll();
-
-		return $this->render('index.html.twig', [
-			'posts' => $posts,
-			'online_users' => $this->getOnlineUsers(),
-			'users' => $users, // Dodajemy brakującą zmienną
-		]);
+		return $this->redirectToRoute('app_home');
 	}
 
 	#[Route('/post/{id}', name: 'post_get', methods: ['GET'])]
