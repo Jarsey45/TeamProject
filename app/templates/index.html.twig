@@ -1,26 +1,27 @@
 {% extends 'base.html.twig' %}
 
 {% block javascripts %}
-    {# Jeśli importmap jest potrzebny, upewnij się, że działa #}
-    {# {{ importmap('post') }} #}
-    <script src="{{ asset('js/post.js') }}"></script>
+	{% block importmap_post %}
+		{{ importmap('post') }}
+	{% endblock %}
 {% endblock %}
 
 {% block body %}
-    {% include 'components/_left_panel.html.twig' with { online_users: online_users } %}
+	{% include 'components/_left_panel.html.twig' with { online_users: online_users } %}
 
-    <section class="feed">
-        {# @var posts Post[] #}
-        {% for post in posts %}
-            {% include 'components/_post_card.html.twig' with { post: post } %}
-        {% endfor %}
-        <div class="loading-placeholder">
-            <span class="dot"></span>
-            <span class="dot"></span>
-            <span class="dot"></span>
-        </div>
-    </section>
+	<section
+		class="feed">
+		{# @var posts Post[] #}
+		{% for post in posts %}
+			{% include 'components/_post_card.html.twig' with { post: post } %}
+		{% endfor %}
+		<div class="loading-placeholder">
+			<span class="dot"></span>
+			<span class="dot"></span>
+			<span class="dot"></span>
+		</div>
+	</section>
 
-    {# @var users \App\Entity\User[] #}
-    {% include 'components/_right_panel.html.twig' with { users: users } %}
+	{# @var users \App\Entity\User[] #}
+	{% include 'components/_right_panel.html.twig' with { users: users } %}
 {% endblock %}

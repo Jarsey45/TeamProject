@@ -7,11 +7,10 @@
 		<button class="post-button">Plum...</button>
 	</form>
 	<div class="account-dropdown">
-    <button class="profile-button">Account</button>
-    <div class="dropdown-menu">
-      <a href="{{ path('profile') }}">Profile</a>
-      <a href="{{ path('settings') }}">Settings</a>
-      <a href="{{ path('logout') }}">Logout</a>
-    </div>
-  </div>
+		<button class="profile-button">Account</button>
+		<div class="dropdown-menu">
+			<a href="{{ path('user_profile') }}">Profile</a>
+			<a href="{{ path('logout') }}">Logout</a>
+		</div>
+	</div>
 </div>

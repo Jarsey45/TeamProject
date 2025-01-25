@@ -78,7 +78,7 @@ class RegisterController extends AbstractController {
 			$this->addFlash('error', $e->getMessage());
 			return $this->redirectToRoute('app_register');
 		} catch (\Exception $e) {
-			$this->addFlash('error', 'An unexpected error occurred during registration.');
+			$this->addFlash('error', 'An unexpected error occurred during registration. ' . $e->getMessage());
 			return $this->redirectToRoute('app_register');
 		}
 	}

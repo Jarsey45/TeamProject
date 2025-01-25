@@ -1,41 +1,38 @@
 <div class="post-card">
-    <div class="user-info">
-        <img src="{{ asset('icons/user-avatar.svg') }}" alt="User Avatar" class="avatar">
-        <div class="user-details">
-            <h3>
-                {% if post.getAuthor() %}
-                    {{ post.getAuthor().getFirstName() }}
-                    {{ post.getAuthor().getLastName() }}
-                {% endif %}
-            </h3>
-            <p>{{ post.getContent() }}</p>
-        </div>
-    </div>
-    <div class="actions">
-        <form action="{{ path('api_post_like', {'id': post.id}) }}" method="POST" class="inline">
-            <button type="submit" class="action-button {{ post.isLikedByUser(app.user) ? 'liked' : '' }}">
-                <span>{{ post.getLikesCount() }}</span>
-                <img src="{{ asset('icons/heart.svg') }}" alt="Like">
-            </button>
-        </form>
-        <button class="action-button toggle-comment" data-post-id="{{ post.id }}">
-            <img src="{{ asset('icons/comment.svg') }}" alt="Comment">
-        </button>
-        <a href="#" class="action-button">
-            <img src="{{ asset('icons/retweet.svg') }}" alt="Retweet">
-        </a>
-    </div>
+	<div class="user-info">
+		<img src="{{ asset('icons/user-avatar.svg') }}" alt="User Avatar" class="avatar">
+		<div class="user-details">
+			<h3>
+				{% if post.getAuthor() %}
+					{{ post.getAuthor().getFirstName() }}
+					{{ post.getAuthor().getLastName() }}
+				{% endif %}
+			</h3>
+			<p>{{ post.getContent() }}</p>
+		</div>
+	</div>
+	<div class="actions">
+		<form action="{{ path('api_post_like', {'id': post.id}) }}" method="POST" class="inline">
+			<button type="submit" class="action-button {{ post.isLikedByUser(app.user) ? 'liked' : '' }}">
+				<span>{{ post.getLikesCount() }}</span>
+				<img src="{{ asset('icons/heart.svg') }}" alt="Like">
+			</button>
+		</form>
+		<button class="action-button toggle-comment" data-post-id="{{ post.id }}">
+			<img src="{{ asset('icons/comment.svg') }}" alt="Comment">
+		</button>
+	</div>
 
-    {# Comment input, hidden initially #}
-    <div class="comment-input-container" id="comment-section-{{ post.id }}" style="display: none;">
-        {% include 'components/_comment_input.html.twig' with { 'postID': post.id } %}
-    </div>
+	{# Comment input, hidden initially #}
+	<div class="comment-input-container" id="comment-section-{{ post.id }}" style="display: none;">
+		{% include 'components/_comment_input.html.twig' with { 'postID': post.id } %}
+	</div>
 
-    {# Comments section, always visible, newest first #}
-    <div class="comments">
-        {% for comment in post.getComments()|reverse %}
-            {% include 'components/_comment_card.html.twig' with { 'comment': comment } %}
-        {% endfor %}
-    </div>
-		
+	{# Comments section, always visible, newest first #}
+	<div class="comments">
+		{% for comment in post.getComments()|reverse %}
+			{% include 'components/_comment_card.html.twig' with { 'comment': comment } %}
+		{% endfor %}
+	</div>
+
 </div>

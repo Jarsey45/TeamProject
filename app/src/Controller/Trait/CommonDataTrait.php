@@ -6,18 +6,16 @@ namespace App\Controller\Trait;
 use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
 
-trait CommonDataTrait
-{
-    private function getCommonData(EntityManagerInterface $entityManager): array
-    {
-        $users = $entityManager->getRepository(User::class)->findAll();
+trait CommonDataTrait {
+	private function getCommonData(EntityManagerInterface $entityManager) : array {
+		$users = $entityManager->getRepository(User::class)->findAll();
 
-        // Mocked data for demonstration - you might want to implement actual online users logic
-        $onlineUsers = 256;
+		// Mocked data for demonstration
+		$onlineUsers = count($users);
 
-        return [
-            'online_users' => $onlineUsers,
-            'users' => $users,
-        ];
-    }
+		return [
+			'online_users' => $onlineUsers,
+			'users' => $users,
+		];
+	}
 }
