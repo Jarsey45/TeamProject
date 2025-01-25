@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+	{% include 'components/_left_panel.html.twig' with { online_users: online_users } %}
+
+	<section
+		class="user-profile">
+		USER PROFILE
+	</section>
+
+	{# @var users \App\Entity\User[] #}
+	{% include 'components/_right_panel.html.twig' with { users: users } %}
+{% endblock %}
