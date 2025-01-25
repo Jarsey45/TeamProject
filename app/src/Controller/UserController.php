@@ -22,12 +22,13 @@ class UserController extends AbstractController {
 
 		$commonData = $this->getCommonData($entityManager);
 		return $this->render(
-			'user/index.html.twig',
-			array_merge(
-				$commonData,
-				[],
-			)
+				'user/index.html.twig',
+				array_merge(
+						$commonData,
+						[
+								'currentUser' => $this->getUser(),
+						],
+				)
 		);
-
 	}
 }

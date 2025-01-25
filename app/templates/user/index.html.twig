@@ -5,7 +5,13 @@
 
 	<section
 		class="user-profile">
-		USER PROFILE
+		PROFIL UŻYTKOWNIKA
+		<div class="profile">
+			<div> 🪪 <span class="profile-label">Imię i nazwisko: </span> {{ currentUser.getFirstName() }}  {{ currentUser.getLastName() }}</div> 
+			<div> 📧 <span class="profile-label"> Email: </span>  {{ currentUser.getEmail() }}</div> 
+			<div> ☎️ <span class="profile-label"> Numer telefonu: </span> {{ currentUser.getPhoneNumber() ?? '123456789' }}</div> 
+			<div> 📅 <span class="profile-label"> W aplikacji od: </span> {{ currentUser.getCreatedAt().format('d.m.Y') }}</div> 
+		</div>
 	</section>
 
 	{# @var users \App\Entity\User[] #}
